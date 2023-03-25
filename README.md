@@ -51,10 +51,26 @@ Isso depende:
 
 Sua aplicação vai ser um microsserviço? Sem necessidade de filtros de requisição http e afins? Vai precisar de testes unitários e plugins para gerenciar dependências (maven, gradle)? Se sim, o recomendado é o Spring Boot.
 
-Se sua aplicação não vai conter microsserviços, mas vai precisar filtrar requisições http, aplicar proteções (CORS por exemplo), permitir ou negar domínios, O recomendado é o Spring. Comumente utilizado como "BFF" (Backend for Frontend)
+Se sua aplicação não vai conter microsserviços, mas vai precisar filtrar requisições http, aplicar proteções (CORS por exemplo), permitir ou negar domínios, O recomendado é o Spring. Comumente utilizado como "BFF" (Backend for Frontend).
 
 
-### Injeção de dependências 
+### Injeção de dependências
+> Como funciona a injeção de dependências no Spring boot?
+
+Antes de falar sobre injeção de dependências, precisamos conhecer primeiro sobre "IoC" - Inversion of control (inversão de controle)
+
+> O que é a inversão de controle (IoC)?
+
+É um principio de desenvolvimento de software, onde transferimos a responsabilidade do controle de objetos ou partes de uma aplicação para um container ou um _framework_.
+Na programação tradicional, esse controle é feito por nosso próprio código quando consumimos uma lib, por exemplo.
+
+Passando este controle para um framework, temos acesso à um leque de possibilidades e vantagens que esta arquitetura permite:
+
+1. separar a execução da implementação;
+2. facilidade em trocar implementações;
+3. maior modularidade;
+4. facilidade em teste de aplicações, facilita o uso de mocks de componentes e dependências;
+
 ### Interfaces
 ### Spring web
 ## Desenvolvimento
