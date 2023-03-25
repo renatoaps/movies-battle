@@ -71,6 +71,14 @@ Passando este controle para um framework, temos acesso à um leque de possibilid
 3. maior modularidade;
 4. facilidade em teste de aplicações, facilita o uso de mocks de componentes e dependências;
 
+> Método tradicional
+
+![image](https://user-images.githubusercontent.com/39572088/227721548-1e3a615b-9704-4ba8-b701-adcdb0f7cdcf.png)
+
+> Usando IoC
+
+![image](https://user-images.githubusercontent.com/39572088/227721566-587a53cc-30f6-40f9-a7c8-8906d2309664.png)
+
 ### Interfaces
 ### Spring web
 ## Desenvolvimento
