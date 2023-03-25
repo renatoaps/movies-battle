@@ -93,7 +93,9 @@ public interface HttpClient {
 ```
 
 Na interface acima, chamada de HttpClient temos dois métodos:
+
 1 - getMovieDetail = retorna detalhes de um filme baseado em seu titulo e ano;
+
 2 - getMovieById = retorna detalhes de um filme, baseado em seu id do Imdb;
 
 
@@ -133,6 +135,172 @@ Selecionar a dependência _web_ por hora é suficiente.
 ### Spring web
 <br>
 Com a dependência do spring web adicionada ao nosso _pom.xml_ estamos habilitados a executar e receber requisições HTTP.
+
+Junto com esta dependência, conseguimos acesso à uma lib chamada _RestTemplate_ que nos auxilia na execução de chamadas HTTP, que vamos utilizar para nos conectar com a API do Imdb.
+<br>
+<br>
+
+## Criando nova classe para implementar as interfaces
+
+A partir deste ponto, podemos criar uma classe chamada de _RestClient_ que vai ser responsável por obter os dados do serviço externo que vamos consumir.
+
+``` java
+public class RestClient{
+
+    // lib para executar as chamadas
+    RestTemplate restTemplate = new RestTemplate();
+
+    // dados de configuração
+    private static final String API_KEY = "f81cfd34";
+    private static final String URI_API_IMDB = "https://www.omdbapi.com/";
+}
+```
+
+Depois, fazemos a implementação da interface _CLientConfigurator_:
+
+``` java
+public class RestClient implements ClientConfigurator{
+
+    @Override
+    public String prepareServiceUrl(String title, int year){
+        String uri = URI_API_IMDB;
+
+        uri = uri.concat("?t=" + title)
+                 .concat("&y=" + year);
+
+        uri = prepareAuthentication(uri);
+
+        return uri;
+    }
+
+    @Override
+    public String prepareAuthentication(String uri){
+        return uri.concat("&apikey=" + API_KEY);
+    }
+
+    @Override
+    public String prepareServiceUrl(String titleId){
+        String uri = URI_API_IMDB;
+
+        uri = uri.concat("?i=" + titleId);
+        uri = prepareAuthentication(uri);
+
+        return uri;
+    }
+}
+```
+
+A _annotation_ _Override_ garante que a implementação está sendo feita da classe externa;
+
+Em seguida, implementamos os métodos da _HttpClient_ :
+
+``` java
+public class RestClient implements ClientConfigurator{
+
+    @Override
+    public String getMovieDetail(String title, int year) {
+        String uri = prepareServiceUrl(title, year);
+
+        ResponseEntity<String> response = executeCall(uri);
+
+        return  response.getBody();
+    }
+
+    @Override
+    public String getMovieById(String movieId) {
+        String uri = prepareServiceUrl(movieId);
+
+        ResponseEntity<String> response = executeCall(uri);
+
+        return response.getBody();
+    }
+}
+```
+
+E criamos um método privado chamado de _executeCall_ para poder fazer a chamada em si ao serviço:
+
+``` java
+    private ResponseEntity<String> executeCall(String uri){
+        return restTemplate.exchange(uri,
+                HttpMethod.GET,
+                HttpEntity.EMPTY
+                ,String.class);
+    }
+```
+
+<details>
+  <summary>Implementação completa</summary>
+  
+  ``` java
+
+import interfaces.ClientConfigurator;
+import interfaces.HttpClient;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+public class RestClient implements HttpClient, ClientConfigurator {
+
+    RestTemplate restTemplate = new RestTemplate();
+    private static final String API_KEY = "f81cfd34";
+    private static final String URI_API_IMDB = "https://www.omdbapi.com/";
+
+    @Override
+    public String getMovieDetail(String title, int year) {
+        String uri = prepareServiceUrl(title, year);
+
+        ResponseEntity<String> response = executeCall(uri);
+
+        return  response.getBody();
+    }
+
+    @Override
+    public String getMovieById(String movieId) {
+        String uri = prepareServiceUrl(movieId);
+
+        ResponseEntity<String> response = executeCall(uri);
+
+        return response.getBody();
+    }
+
+
+    public String prepareServiceUrl(String title, int year){
+        String uri = URI_API_IMDB;
+
+        uri = uri.concat("?t=" + title)
+                 .concat("&y=" + year);
+
+        uri = prepareAuthentication(uri);
+
+        return uri;
+    }
+
+
+    public String prepareAuthentication(String uri){
+        return uri.concat("&apikey=" + API_KEY);
+    }
+
+    public String prepareServiceUrl(String titleId){
+        String uri = URI_API_IMDB;
+
+        uri = uri.concat("?i=" + titleId);
+        uri = prepareAuthentication(uri);
+
+        return uri;
+    }
+
+    private ResponseEntity<String> executeCall(String uri){
+        return restTemplate.exchange(uri,
+                HttpMethod.GET,
+                HttpEntity.EMPTY
+                ,String.class);
+    }
+
+}
+
+  ```
+</details>
 
 
 ### Desenvolvimento
