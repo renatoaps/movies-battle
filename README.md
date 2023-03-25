@@ -22,6 +22,9 @@ Não.
 
 Vejamos o diagrama a seguir:
 
+![image](https://user-images.githubusercontent.com/39572088/227717982-9b4e063c-8f09-4896-8036-47ccfa5f3700.png)
+
+
 
 ### Porque Spring?
 
