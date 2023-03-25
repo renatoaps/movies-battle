@@ -49,9 +49,9 @@ A diferença entre os dois é que o "Boot" é uma extensão do "Spring", trazend
 
 Isso depende:
 
-Sua aplicação vai ser um microsserviço? Sem necessidade de filtros de requisição http e afins? Vai precisar de testes unitários e plugins para gerenciar dependências (maven, gradle)? Se sim, o recomendado é o Spring Boot.
+Sua aplicação vai ser um microsserviço? Sem necessidade de filtros de requisição HTTP e afins? Vai precisar de testes unitários e plugins para gerenciar dependências (maven, gradle)? Se sim, o recomendado é o Spring Boot.
 
-Se sua aplicação não vai conter microsserviços, mas vai precisar filtrar requisições http, aplicar proteções (CORS por exemplo), permitir ou negar domínios, O recomendado é o Spring. Comumente utilizado como "BFF" (Backend for Frontend).
+Se sua aplicação não vai conter microsserviços, mas vai precisar filtrar requisições HTTP, aplicar proteções (CORS por exemplo), permitir ou negar domínios, O recomendado é o Spring. Comumente utilizado como "BFF" (Backend for Frontend).
 
 
 ### Injeção de dependências
@@ -85,19 +85,56 @@ Interfaces são tipos _abstratos_ que contém um conjunto de métodos. São util
 
 Exemplo de interface:
 
-```
-public interface Match {
-    
-    static boolean isValidMatch(int playersNumber){
-        if(playersNumber == 2){
-            return true;
-        }
-
-        return false;
-    }
+``` java
+public interface HttpClient {
+    String getMovieDetail(String title, int year);
+    String getMovieById(String movieId);
 }
 ```
+
+Na interface acima, chamada de HttpClient temos dois métodos:
+1 - getMovieDetail = retorna detalhes de um filme baseado em seu titulo e ano;
+2 - getMovieById = retorna detalhes de um filme, baseado em seu id do Imdb;
+
+
+Temos uma interface acima para executar as requisições HTTP. 
+Agora precisamos criar uma outra interface, para CONFIGURAR as nossas conexões:
+
+``` java
+public interface ClientConfigurator {
+    String prepareServiceUrl(String title, int year);
+    String prepareServiceUrl(String titleId);
+    String prepareAuthentication(String uri);
+}
+```
+
+Agora temos as chamadas por titulo e ano, outra chamada por id do filme. Também temos o método prepareAuthentication, onde definimos a chave de nossa API KEY para fazer o consumo seguro da API.
+<br>
+
+De acordo com o OpenImdbAPI, devemos consumir assim:
+
+> https://www.omdbapi.com/?apikey=[yourkey]&[params]
+
+Desta forma podemos nos conectar de forma segura na API e fazer as requisições.
+
+Já temos as interfaces, agora precisamos implementá-las.
+
+Para isso, vamos precisar de:
+- Maven 
+- Spring boot
+
+
+para facilitar nosso trabalho podemos utilizar o [spring initializr](https://start.spring.io/), que configura um projeto pra nós.
+
+Selecionar a dependência _web_ por hora é suficiente.
+
+<br>
+
 ### Spring web
-## Desenvolvimento
-## Conclusão
-## Extras
+<br>
+Com a dependência do spring web adicionada ao nosso _pom.xml_ estamos habilitados a executar e receber requisições HTTP.
+
+
+### Desenvolvimento
+### Conclusão
+### Extras
