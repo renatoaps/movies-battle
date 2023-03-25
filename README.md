@@ -80,6 +80,23 @@ Passando este controle para um framework, temos acesso à um leque de possibilid
 ![image](https://user-images.githubusercontent.com/39572088/227721566-587a53cc-30f6-40f9-a7c8-8906d2309664.png)
 
 ### Interfaces
+
+Interfaces são tipos _abstratos_ que contém um conjunto de métodos. São utilizadas para se obter polimorfismo e herança.
+
+Exemplo de interface:
+
+```
+public interface Match {
+    
+    static boolean isValidMatch(int playersNumber){
+        if(playersNumber == 2){
+            return true;
+        }
+
+        return false;
+    }
+}
+```
 ### Spring web
 ## Desenvolvimento
 ## Conclusão
