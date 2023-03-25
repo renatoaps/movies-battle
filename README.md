@@ -227,7 +227,7 @@ E criamos um método privado chamado de _executeCall_ para poder fazer a chamada
                 ,String.class);
     }
 ```
-
+#
 <details>
   <summary>Implementação completa</summary>
   
@@ -300,6 +300,65 @@ public class RestClient implements HttpClient, ClientConfigurator {
 }
 
   ```
+</details>
+
+#
+
+### Response da API
+``` json
+
+HTTP GET https://www.omdbapi.com/?t=batman&y=1997&apikey=f81cfd34
+Accept=[text/plain, application/json, application/*+json, */*]
+Response 200 OK
+Reading to [java.lang.String] as "application/json;charset=utf-8"
+
+```
+
+<details>
+ <summary>response.json</summary>
+
+ ```
+{
+  "Title": "Batman & Robin",
+  "Year": "1997",
+  "Rated": "PG-13",
+  "Released": "20 Jun 1997",
+  "Runtime": "125 min",
+  "Genre": "Action, Sci-Fi",
+  "Director": "Joel Schumacher",
+  "Writer": "Bob Kane, Akiva Goldsman",
+  "Actors": "Arnold Schwarzenegger, George Clooney, Chris O'Donnell",
+  "Plot": "Batman and Robin try to keep their relationship together even as they must stop Mr. Freeze and Poison Ivy from freezing Gotham City.",
+  "Language": "English",
+  "Country": "United States, United Kingdom",
+  "Awards": "10 wins & 22 nominations",
+  "Poster": "https://m.media-amazon.com/images/M/MV5BMGQ5YTM1NmMtYmIxYy00N2VmLWJhZTYtN2EwYTY3MWFhOTczXkEyXkFqcGdeQXVyNTA2NTI0MTY@._V1_SX300.jpg",
+  "Ratings": [
+    {
+      "Source": "Internet Movie Database",
+      "Value": "3.7/10"
+    },
+    {
+      "Source": "Rotten Tomatoes",
+      "Value": "12%"
+    },
+    {
+      "Source": "Metacritic",
+      "Value": "28/100"
+    }
+  ],
+  "Metascore": "28",
+  "imdbRating": "3.7",
+  "imdbVotes": "257,380",
+  "imdbID": "tt0118688",
+  "Type": "movie",
+  "DVD": "21 Oct 1997",
+  "BoxOffice": "$107,353,792",
+  "Production": "N/A",
+  "Website": "N/A",
+  "Response": "True"
+}
+```
 </details>
 
 
