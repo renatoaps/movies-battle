@@ -31,7 +31,7 @@ Os frameworks _contém_ libs (libraries ou bibliotecas) de código, enquanto que
 
 > Sempre devo utilizar frameworks então? Afinal eles contém libs
 
-Nem sempre os frameworks devem ser utilizados. Em certos casos, apenas injetar uma lib pode resolver a solução que você precisa.
+Nem sempre os frameworks devem ser utilizados. Em certos casos, apenas injetar uma lib pode trazer a solução que você precisa.
 
 Porém, para agilizar o desenvolvimento de aplicações, os frameworks são utilizados levando em consideração o _pacote_ de opções que ele oferece:
 
@@ -39,17 +39,24 @@ _preciso de:_ solução de login, autenticação, segurança, consumo de banco d
 
 _preciso de:_ consumir um banco de dados, mas meu framework atual não suporta -> injetar uma lib para consumo de BD.
 
-### Porque Spring?
+### O que é Spring/Spring boot?
+
+Spring e Spring Boot são frameworks Java.
+
+A diferença entre os dois é que o "Boot" é uma extensão do "Spring", trazendo mais facilidades na configuração da aplicação e ainda libs que estão presentes no Spring.
+
+> Então sempre devo utilizar o Spring boot, não o Spring?
+
+Isso depende:
+
+Sua aplicação vai ser um microsserviço? Sem necessidade de filtros de requisição http e afins? Vai precisar de testes unitários e plugins para gerenciar dependências (maven, gradle)? Se sim, o recomendado é o Spring Boot.
+
+Se sua aplicação não vai conter microsserviços, mas vai precisar filtrar requisições http, aplicar proteções (CORS por exemplo), permitir ou negar domínios, O recomendado é o Spring. Comumente utilizado como "BFF" (Backend for Frontend)
 
 
+### Injeção de dependências 
 ### Interfaces
-
-### Injeção de dependências
-
 ### Spring web
-
 ## Desenvolvimento
-
 ## Conclusão
-
 ## Extras
