@@ -361,7 +361,137 @@ Reading to [java.lang.String] as "application/json;charset=utf-8"
 ```
 </details>
 
+O response de nossa aplicação, até então, está no formato de String, como pode ser visto no retorno dos métodos.
 
-### Desenvolvimento
+Precisamos mapear nossa resposta para um POJO (classe pura Java), então nosso primeiro passo é criar uma classe de
+uma classe de _Domain_ para que possamos jogar as informações e depois uma _Utils_ onde vamos concentrar os métodos mais comuns utilizados por nossa aplicação:
+
+``` java
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+public class Movie {
+
+    private String movieName;
+    private String releaseYear;
+    private String movieId;
+    private Double imdbRating;
+}
+
+```
+> Para utilizar as anotações @Getter, @Setter e afins, precisamos ativar o _Lombok_ em nosso projeto (pom.xml), facilitando a escrita
+> de código
+``` xml
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>RELEASE</version>
+        <scope>compile</scope>
+    </dependency>
+```
+Criação da classe Utils, que vai fazer a conversão e mapeamento de nossos campos:
+``` java
+public class Utils {
+
+    public static Movie convertResponse(String apiResponse) throws JsonProcessingException {
+        // cria um objeto que possa ser mapeado em JSON, a partir de String
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode node = mapper.readTree(apiResponse);
+
+        return mapResponseFields(node);
+    }
+
+    private static Movie mapResponseFields(JsonNode node){
+        // mapeia somente os campos necessarios para nossa batalha
+        Movie movie = new Movie();
+        movie.setMovieName(node.get("Title").asText());
+        movie.setReleaseYear(node.get("Year").asText());
+        movie.setMovieId(node.get("imdbID").asText());
+        movie.setImdbRating(node.get("imdbRating").asDouble());
+
+        return movie;
+    }
+}
+
+```
+### Expondo as informações
+
+Tendo em vista que já possuimos:
+- Chamada válida a uma fonte de dados;
+- Conhecemos a informação que precisamos;
+- Mapeamos a informação e convertemos em JSON;
+- Temos os parâmetros necessários para obter as informações;
+
+Já podemos fazer a exposição de um _controller_ em nossa aplicação, ficando responsável por manusear as requisições HTTP
+baseadas em nossas regras.
+
+Nosso controller de filmes vai ser composto de 2 endpoints:
+- getMovieById: id do filme no imdb
+- getMovieByParams: nome do filme e ano ou somente pelo nome
+
+````java
+
+@RestController
+@RequestMapping("/v1/movies")
+@AllArgsConstructor
+public class MovieController {
+    
+    private final RestClient restClient;
+    
+    @GetMapping("{id}")
+    public ResponseEntity<Movie> getMovieById(@PathVariable String id) throws JsonProcessingException {
+        String response = restClient.getMovieById(id);
+
+        if (response.contains("Error")){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return  new ResponseEntity<>(Utils.convertResponse(response), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<Movie> getMovieByParams(@RequestParam  String title,
+                                                  @RequestParam (required = false) Integer year) throws JsonProcessingException {
+
+        String response = restClient.getMovieDetail(title, year);
+
+        if (response.contains("Error")){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return  new ResponseEntity<>(Utils.convertResponse(response), HttpStatus.OK);
+    }
+}
+
+````
+
+> @RestController: expõe nossa interface para receber requisições
+>
+> @RequestMapping: define o caminho de nossa interface sendo: url da aplicação + requestMapping
+> 
+> @AllArgsConstructor: cria um construtor que adiciona todos os parâmetros necessários
+> 
+> @GetMapping: informa que aquela requisição é do tipo GET
+> 
+> ResponseEntity<Movie>: tipo de resposta de nosso serviço + status code
+
+Como pode ser visto, fizemos injeção de nosso RestClient dentro do _controller_, porém, se tentarmos subir a aplicação assim, 
+vai apresentar um erro pra nós, onde o Spring vai comentar que não possui o objeto RestClient em memória.
+Graças  ao IoC, é muito simples ajustar esse erro:
+
+````java
+@Configuration
+public class ApplicationConfig {
+
+    @Bean
+    public RestClient prepareHttpClient(){
+        return new RestClient();
+    }
+}
+````
+
+Anotando com _@Configuration_ nós dizemos ao Spring que inicialize as configurações desta classe antes de subir
+a aplicação, criando assim, o objeto que precisamos para injetar em nosso controller.
 ### Conclusão
 ### Extras
