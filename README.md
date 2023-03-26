@@ -493,5 +493,10 @@ public class ApplicationConfig {
 
 Anotando com _@Configuration_ nós dizemos ao Spring que inicialize as configurações desta classe antes de subir
 a aplicação, criando assim, o objeto que precisamos para injetar em nosso controller.
+
+Agora que possuimos endpoints expostos, nossa aplicação já está rodando e funcional, podemos focar na modelagem de nossos dados:
+
+![image](https://user-images.githubusercontent.com/39572088/227784481-e77f3606-be14-48f6-8d95-d68dc9f566c0.png)
+
 ### Conclusão
 ### Extras
