@@ -363,8 +363,7 @@ Reading to [java.lang.String] as "application/json;charset=utf-8"
 
 O response de nossa aplicação, até então, está no formato de String, como pode ser visto no retorno dos métodos.
 
-Precisamos mapear nossa resposta para um POJO (classe pura Java), então nosso primeiro passo é criar uma classe de
-uma classe de _Domain_ para que possamos jogar as informações e depois uma _Utils_ onde vamos concentrar os métodos mais comuns utilizados por nossa aplicação:
+Precisamos mapear nossa resposta para um POJO (classe pura Java), então nosso primeiro passo é criar uma classe de _Domain_ para que possamos jogar as informações e depois uma _Utils_ onde vamos concentrar os métodos mais comuns utilizados por nossa aplicação:
 
 ``` java
 @Getter
