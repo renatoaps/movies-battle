@@ -521,6 +521,9 @@ Com base nas regras acima e todas as classes já criadas, vamos elaborar nosso f
 
 > Contrato completo
 
+![image](https://user-images.githubusercontent.com/39572088/227793699-cd72890b-43c4-4b3d-b29c-0dd564c55cf0.png)
+
+
 O contrato reflete como seria nossa aplicação completa, excluindo a parte de segurança e autenticação do Spring (Que possui endpoints próprios)
 
 
