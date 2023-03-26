@@ -1,0 +1,105 @@
+openapi: 3.0.3
+info:
+  title: Movies Battle - OpenAPI 3.0
+  description: |-
+    This is a sample Movies Battle application based on the OpenAPI 3.0 specification.
+  contact:
+    email: renatodev@icloud.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://battlesmovie/api/v1
+tags:
+  - name: movies
+    description: Operations about movies
+paths:
+  /movies:
+    get:
+      tags:
+        - movies
+      summary: Get a movie based on some characteristics
+      parameters:
+        - name: title
+          in: query
+          description: The movie name
+          required: true
+          schema:
+            type: string
+        - name: year
+          in: query
+          description: The release year
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '400':
+          description: Invalid username/password supplied
+  /movies/{id}:
+    get:
+      tags:
+        - movies
+      summary: Get movie by movie id on imdb
+      description: ''
+      operationId: getMovieById
+      parameters:
+        - name: id
+          in: path
+          description: 'The movie that needs to be fetched. Use tt0100502 for testing. '
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        movieName:
+          type: string
+          example: "RoboCop"
+        releaseYear:
+          type: string
+          example: "1990"
+        movieId:
+          type: string
+          example: "tt0100502"
+        imdbRating:
+          type: integer
+          format: int64
+          example: 5.8
+
+
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
