@@ -514,5 +514,10 @@ Agora que possuimos endpoints expostos, nossa aplicação já está rodando e fu
 - Deve possuir um ranking;
 
 Com base nas regras acima e todas as classes já criadas, vamos elaborar nosso fluxo completo da aplicação.
+    
+> Fluxo completo
+
+ ![image](https://user-images.githubusercontent.com/39572088/227791540-009caf15-75be-496e-9542-e645f6886d46.png)
+
 ### Conclusão
 ### Extras
