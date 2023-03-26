@@ -525,8 +525,13 @@ Com base nas regras acima e todas as classes já criadas, vamos elaborar nosso f
 
 
 
-O contrato reflete como seria nossa aplicação completa, excluindo a parte de segurança e autenticação do Spring (Que possui endpoints próprios)
+O contrato reflete como seria nossa aplicação completa, excluindo a parte de segurança e autenticação do Spring (Que possui endpoints próprios).
 
 
 ### Conclusão
+    
+Conhecer como funciona um framework "por baixo dos panos" é tão importante quanto saber utilizá-lo; Os conceitos básicos auxiliam bastante no dia-a-dia, evitando e mitigando problemas que são difíceis de ser detectados em projetos de estrutura mais complexa.
 ### Extras
+    
+[swagger parser](https://github.com/swagger-api/swagger-parser) - Criando pojos a partir de um contrato swagger
+[swagger codegen](https://github.com/swagger-api/swagger-codegen) - Criando APIS baseadas num contrato swagger
