@@ -498,5 +498,21 @@ Agora que possuimos endpoints expostos, nossa aplicação já está rodando e fu
 
 ![image](https://user-images.githubusercontent.com/39572088/227784481-e77f3606-be14-48f6-8d95-d68dc9f566c0.png)
 
+> Jogador: pode possuir várias partidas e várias sequências;
+> 
+> Partidas: pode possuir vários jogadores e sequências;
+> 
+> Sequências: pode possuir vários jogadores e vários filmes, além de aparecer em diversas partidas;
+> 
+> Filmes: pode estar em várias sequências;
+
+### Regras
+- Os jogadores precisam criar cadastro e estarem logados;
+- A sequência tem que ter um par de filmes;
+- Este par não pode se repetir;
+- Deve ser calculado o score do par, baseado no imdbRating de cada filme;
+- Deve possuir um ranking;
+
+Com base nas regras acima e todas as classes já criadas, vamos elaborar nosso fluxo completo da aplicação.
 ### Conclusão
 ### Extras
