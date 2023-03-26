@@ -17,6 +17,10 @@ servers:
 tags:
   - name: movies
     description: Operations about movies
+  - name: rounds
+    description: Operations about Rounds
+  - name: sequences
+    description: Operations about Sequencies
 paths:
   /movies:
     get:
@@ -70,6 +74,66 @@ paths:
           description: Invalid username supplied
         '404':
           description: User not found
+  /rounds:
+    get:
+      tags:
+        - rounds
+      summary: Get a rounds list without parameters
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rounds'
+        '400':
+          description: Invalid username/password supplied
+  /rounds/{id}:
+    get:
+      tags:
+        - rounds
+      summary: Get a round by id on database
+      description: ''
+      operationId: getRoundById
+      parameters:
+        - name: id
+          in: path
+          description: 'The round that needs to be fetched. Use ae1234d23 for testing. '
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rounds'
+        '400':
+          description: Invalid username/password supplied
+  /sequences/{id}:
+    get:
+      tags:
+        - sequences
+      summary: Get a sequence by id on database
+      description: ''
+      operationId: getSequenceByid
+      parameters:
+        - name: id
+          in: path
+          description: 'The sequence that needs to be fetched. Use ae1234d23 for testing. '
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sequence'
+        '400':
+          description: Invalid username/password supplied
 components:
   schemas:
     Movie:
@@ -88,17 +152,54 @@ components:
           type: integer
           format: int64
           example: 5.8
+    Round:
+      type: object
+      properties:
+        roundId:
+          type: string
+          example: "ae1234d23"
+        playerId:
+          type: string
+          example: "19901234"
+        sequenceId:
+          type: string
+          example: "19901234"
+    Sequence:
+      type: object
+      properties:
+        sequenceId:
+          type: string
+          example: "ae1234d23"
+        playerId:
+          type: string
+          example: "19901234"
+        roundId:
+          type: string
+          example: "19901234"
+        movieId:
+          type: string
+          example: "19901234"
+        sequenceScore:
+          type: integer
+          format: int64
+          example: 34.8
+          
+    Rounds:
+      type: array
+      items:
+        $ref: '#/components/schemas/Round'
+
 
 
   securitySchemes:
-    petstore_auth:
+    movies_auth:
       type: oauth2
       flows:
         implicit:
-          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          authorizationUrl: https://moviesbattle.swagger.io/oauth/authorize
           scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
+            write:pets: modify movies in your account
+            read:pets: read your movies
     api_key:
       type: apiKey
       name: api_key
