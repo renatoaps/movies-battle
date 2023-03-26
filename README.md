@@ -534,4 +534,5 @@ Conhecer como funciona um framework "por baixo dos panos" é tão importante qua
 ### Extras
     
 [swagger parser](https://github.com/swagger-api/swagger-parser) - Criando pojos a partir de um contrato swagger
+
 [swagger codegen](https://github.com/swagger-api/swagger-codegen) - Criando APIS baseadas num contrato swagger
